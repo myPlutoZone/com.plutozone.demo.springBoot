@@ -1,2 +1,6 @@
 # com.plutozone.demo.springBoot
-Demo for SpringBoot
+
+## Build
+```cmd
+C:\>mvnw.cmd clean package
+```
