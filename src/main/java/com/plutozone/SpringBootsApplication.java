@@ -12,12 +12,12 @@
  * Program		: com.plutozone.demo.springBoot
  * Description	:
  * Environment	: JRE 1.7 or more
- * File			: Application.java
+ * File			: SpringBootsApplication.java
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
  */
-package com.plutozone.main;
+package com.plutozone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,9 +31,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <p>IMPORTANT:</p>
  */
 @SpringBootApplication
-public class Application {
+public class SpringBootsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(SpringBootsApplication.class, args);
 	}
 }

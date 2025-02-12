@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
 	<meta charset="UTF-8">
 	<link href="/common.css" rel="stylesheet">
@@ -11,7 +11,11 @@
 		<ul class="cont">
 			<li>
 				<p class="memo">
-					Health Check: Some internal error has occurred in [[${hostDto.name}]] ([[${hostDto.ip}]])
+					<!--/*
+					[2025-01-01][pluto#plutozone.com][TODO: ERROR Page 등]
+					Health Check: Some internal error has occurred in [[${hostDto.name}]]([[${hostDto.ip}]])
+					*/-->
+					Health Check: Some internal error has occurred in HOSTNAME(IP)
 				</p>
 			</li>
 		</ul>

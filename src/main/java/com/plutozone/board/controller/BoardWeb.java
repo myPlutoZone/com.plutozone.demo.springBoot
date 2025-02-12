@@ -34,6 +34,9 @@ public class BoardWeb {
 
 	@GetMapping("/")
 	public String index(Model model) {
+		System.out.println("--------------------------------------------");
+		System.out.println("/index");
+		System.out.println("--------------------------------------------");
 		// 01. 방명록 조회
 		model.addAttribute("boardList", boardSrvc.getAll());
 		model.addAttribute("hostDto", new HostDto());
@@ -54,12 +57,15 @@ public class BoardWeb {
 			Thread.sleep(randomRange(1,5) * 1000);
 		}
 		catch (InterruptedException e) {}
-		
+
 		return "index";
 	}
 
 	@PostMapping("/")
 	public String insertPost(@ModelAttribute BoardDto boardDto, Model model) {
+		System.out.println("--------------------------------------------");
+		System.out.println("writeForm");
+		System.out.println("--------------------------------------------");
 		// 01-1. 파일첨부
 		if(boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
 			String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());

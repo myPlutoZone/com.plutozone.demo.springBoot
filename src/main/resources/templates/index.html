@@ -11,7 +11,7 @@
 		<ul class="cont">
 			<li>
 				<p class="memo">
-					Health Check : This is running in [[${hostDto.name}]] ([[${hostDto.ip}]])
+					Health Check: This is running in [[${hostDto.name}]]([[${hostDto.ip}]])
 				</p>
 			</li>
 		</ul>
@@ -42,11 +42,11 @@
 
 	<div class="guestbook" style="display: block;">
 		<ul class="cont">
-			<li th:each="post : ${boardList}">
-				<p class="name" th:text="${post.name}"></p>
-				<p class="date"  th:text="${post.writeDate}"></p>
-				<p class="memo"  th:text="${post.content}"></p>
-				첨부파일: <a th:href="@{'/downloadFile/' + ${post.attachedFile}}" th:text="${post.attachedFile}"></a>
+			<li th:each="board : ${boardList}">
+				<p class="name" th:text="${board.name}"></p>
+				<p class="date"  th:text="${board.writeDate}"></p>
+				<p class="memo"  th:text="${board.content}"></p>
+				첨부파일: <a th:href="@{'/downloadFile/' + ${board.attachedFile}}" th:text="${board.attachedFile}"></a>
 			</li>
 		</ul>
 	</div>
