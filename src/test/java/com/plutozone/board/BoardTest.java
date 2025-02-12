@@ -12,28 +12,24 @@
  * Program		: com.plutozone.demo.springBoot
  * Description	:
  * Environment	: JRE 1.7 or more
- * File			: Application.java
+ * File			: BoardTest.java
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
  */
-package com.plutozone.main;
+package com.plutozone.board;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @version 1.0.0
- * @author pluto#plutozone.com
- *
- * @since 2025-01-01
- * <p>DESCRIPTION:</p>
- * <p>IMPORTANT:</p>
- */
-@SpringBootApplication
-public class Application {
+import com.plutozone.board.dto.BoardDto;
+import org.junit.jupiter.api.Test;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+class BoardTest {
+	
+	@Test
+	void testSetName() {
+		BoardDto boardDto = new BoardDto("TESTER", "2025-01-01 00:00:00", "Hi, Spring Boot");
+		boardDto.setName("DEVOPS");
+		assertEquals("DEVOPS", boardDto.getName());
 	}
 }

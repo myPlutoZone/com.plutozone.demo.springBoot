@@ -1,9 +1,13 @@
-package com.plutozone.board;
+package com.plutozone.board.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+
+import com.plutozone.board.dto.BoardDto;
+import com.plutozone.board.service.BoardSrvc;
+import com.plutozone.common.dto.HostDto;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -20,18 +24,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class PostController {
+public class BoardWeb {
 	
 	@Autowired
-	private PostService postService;
-	
-	private int requestCount = 0; // error 및 rollback 시뮬레이션용 - 요청이 5회 이상일때 오류 발생 재연에 사용
+	private BoardSrvc boardSrvc;
+
+	// error 및 rollback 시뮬레이션용 - 요청이 5회 이상일때 오류 발생 재연에 사용
+	private int requestCount = 0;
 
 	@GetMapping("/")
 	public String index(Model model) {
 		// 01. 방명록 조회
-		model.addAttribute("posts", postService.getAll());
-		model.addAttribute("host", new Host());
+		model.addAttribute("boardList", boardSrvc.getAll());
+		model.addAttribute("hostDto", new HostDto());
 		
 //		// 5회 이상의 요청일 경우 error 페이지로 이동
 //		// 잘못된 버전 배포 후 롤백 데모시 주석 해제할 것!!!
@@ -47,29 +52,30 @@ public class PostController {
 		// 03. 1~5초 사이로 랜덤하게 응답지연
 		try {
 			Thread.sleep(randomRange(1,5) * 1000);
-		} catch (InterruptedException e) {}
+		}
+		catch (InterruptedException e) {}
 		
 		return "index";
 	}
 
 	@PostMapping("/")
-	public String insertPost(@ModelAttribute Post post, Model model) {
+	public String insertPost(@ModelAttribute BoardDto boardDto, Model model) {
 		// 01-1. 파일첨부
-		if(post.getUploadingFile().getOriginalFilename().equals("") == false) {
-			String uploadedFile = this.uploadFile(post.getUploadingFile(), post.getName());
-			post.setAttachedFile(uploadedFile);
+		if(boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
+			String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());
+			boardDto.setAttachedFile(uploadedFile);
 		}
 		
 		// 01-2. DB에 저장
-		post.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-		postService.add(post);
+		boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+		boardSrvc.add(boardDto);
 		
 		System.out.println("===> 방명록 저장");
-		System.out.println(post);
+		System.out.println(boardDto);
 
 		// 02. 방명록 조회
-		model.addAttribute("posts", postService.getAll());
-		model.addAttribute("host", new Host());
+		model.addAttribute("boardDto", boardSrvc.getAll());
+		model.addAttribute("hostDto", new HostDto());
 
 		return "index";
 	}
@@ -78,8 +84,8 @@ public class PostController {
 	public String healthCheck(Model model) {
 
 		// 01. 방명록 조회
-		model.addAttribute("posts", postService.getAll());
-		model.addAttribute("host", new Host());
+		model.addAttribute("boardDto", boardSrvc.getAll());
+		model.addAttribute("hostDto", new HostDto());
 		
 		// 5회 이상의 요청일 경우 500 Internal Server Error 발생
 		requestCount++;

@@ -1,8 +1,8 @@
-package com.plutozone.board;
+package com.plutozone.board.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class Post {
+public class BoardDto {
 	
 	private String name;
 	private String writeDate;
@@ -10,16 +10,16 @@ public class Post {
 	private MultipartFile uploadingFile;
 	private String attachedFile;
 
-	public Post() {
+	public BoardDto() {
 	}
 
-	public Post(String name, String writeDate, String content) {
+	public BoardDto(String name, String writeDate, String content) {
 		this.name = name;
 		this.writeDate = writeDate;
 		this.content = content;
 	}
 	
-	public Post(String name, String writeDate, String content, MultipartFile uploadingFile) {
+	public BoardDto(String name, String writeDate, String content, MultipartFile uploadingFile) {
 		this.name = name;
 		this.writeDate = writeDate;
 		this.content = content;

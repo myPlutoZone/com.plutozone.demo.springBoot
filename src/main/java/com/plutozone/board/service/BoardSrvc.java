@@ -1,20 +1,23 @@
-package com.plutozone.board;
+package com.plutozone.board.service;
 
 import java.util.List;
+
+import com.plutozone.board.dto.BoardDto;
+import com.plutozone.board.mapper.BoardMpp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostService {
+public class BoardSrvc {
 	
 	@Autowired
-	private PostMapper postMapper;
+	private BoardMpp boardMpp;
 	
-	public List<Post> getAll(){
-		return postMapper.selectAll();
+	public List<BoardDto> getAll(){
+		return boardMpp.selectAll();
 	}
 	
-	public void add(Post post) {
-		postMapper.insert(post);
+	public void add(BoardDto post) {
+		boardMpp.insert(post);
 	}
 }

@@ -1,11 +1,13 @@
-package com.plutozone.board;
+package com.plutozone.board.mapper;
 
 import java.util.List;
+
+import com.plutozone.board.dto.BoardDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface PostMapper {
-	List<Post> selectAll();
+public interface BoardMpp {
+	List<BoardDto> selectAll();
 
-	void insert(Post post);
+	void insert(BoardDto boardDto);
 }

@@ -12,28 +12,41 @@
  * Program		: com.plutozone.demo.springBoot
  * Description	:
  * Environment	: JRE 1.7 or more
- * File			: Application.java
+ * File			: HostDto.java
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
  */
-package com.plutozone.main;
+package com.plutozone.common.dto;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.net.InetAddress;
 
-/**
- * @version 1.0.0
- * @author pluto#plutozone.com
- *
- * @since 2025-01-01
- * <p>DESCRIPTION:</p>
- * <p>IMPORTANT:</p>
- */
-@SpringBootApplication
-public class Application {
+public class HostDto {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+	private String name;
+	private String ip;
+
+	public HostDto() {
+		try {
+			this.name	= InetAddress.getLocalHost().getHostName();
+			this.ip		= InetAddress.getLocalHost().getHostAddress();
+		}
+		catch (Exception ex) {
+			this.name	= "";
+			this.ip		= "";
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 }
