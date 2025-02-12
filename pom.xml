@@ -12,7 +12,7 @@
 	<groupId>com.plutozone</groupId>
 	<artifactId>demo.springBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo.springBoot</name>
+	<name>com.plutozone.demo.springBoot</name>
 	<description>Demo for SpringBoot by IntelliJ + Maven</description>
 	<properties>
 		<java.version>1.8</java.version>
