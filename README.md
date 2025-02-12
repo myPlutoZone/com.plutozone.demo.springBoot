@@ -1,6 +1,7 @@
 # com.plutozone.demo.springBoot
 
 ## 0. TODO
+- Development Standards
 - image, css, javascript folder for *.css, *.html 
 
 ## 1. Build & Deploy
