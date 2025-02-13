@@ -55,7 +55,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class BoardWeb {
 
-	private static final Logger log = LoggerFactory.getLogger(BoardWeb.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardWeb.class);
 
 	@Autowired
 	private BoardSrvc boardSrvc;
@@ -64,7 +64,7 @@ public class BoardWeb {
 	private int requestCount = 0;
 
 	/**
-	 * @param model
+	 * @param model 모델
 	 * @return String
 	 *
 	 * @since 2025-01-01
@@ -74,70 +74,76 @@ public class BoardWeb {
 	 */
 	@GetMapping("/board/list.web")
 	public String list(Model model) {
-		log.debug("--------------------------------------------");
-		log.debug("/board/list.web");
-		log.debug("--------------------------------------------");
-		// 01. 방명록 조회
-		model.addAttribute("boardList", boardSrvc.getAll());
-		model.addAttribute("hostDto", new HostDto());
-		
-//		// 5회 이상의 요청일 경우 error 페이지로 이동
-//		// 잘못된 버전 배포 후 롤백 데모시 주석 해제할 것!!!
-//		requestCount++;
-//	    if(requestCount > 5) {
-//	    	model.addAttribute("health", "UnHealthy");
-//	    	return "error";
-//	    }
-	    
-		// 02. 의미없이 CPU 사용량 증가
-		this.useCPU(1000);
-		
-		// 03. 1~5초 사이로 랜덤하게 응답지연
+
 		try {
-			Thread.sleep(randomRange(1,5) * 1000);
+			model.addAttribute("boardList"	, boardSrvc.getAll());
+			model.addAttribute("hostDto"	, new HostDto());
+
+			/*
+			// 5회 이상의 요청일 경우 error 페이지로 이동
+			// 잘못된 버전 배포 후 롤백 데모시 주석 해제할 것!!!
+			requestCount++;
+			if (requestCount > 5) {
+				model.addAttribute("health", "UnHealthy");
+				return "error";
+			}
+			*/
+
+			// 02. 의미없이 CPU 사용량 증가
+			this.useCPU(1000);
+
+			// 03. 1~5초 사이로 랜덤하게 응답지연
+			Thread.sleep((long)randomRange(1,5) * 1000);
 		}
-		catch (InterruptedException e) {}
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".list()] " + e.getMessage(), e);
+		}
 
 		return "board/list";
 	}
 
-	@PostMapping("/")
+	/**
+	 * @param boardDto 게시판 DTO
+	 * @param model 모델
+	 * @return String
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION:</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
+	 */
+	@PostMapping("/board/writeProc.web")
 	public String insertPost(@ModelAttribute BoardDto boardDto, Model model) {
-		log.debug("--------------------------------------------");
-		log.debug("writeForm");
-		log.debug("--------------------------------------------");
-		// 01-1. 파일첨부
-		if(boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
+
+		// 01-1. 파일 첨부
+		if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
 			String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());
 			boardDto.setAttachedFile(uploadedFile);
 		}
 		
-		// 01-2. DB에 저장
+		// 01-2. DB 저장
 		boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
 		boardSrvc.add(boardDto);
-		
-		System.out.println("===> 방명록 저장");
-		System.out.println(boardDto);
 
-		// 02. 방명록 조회
-		model.addAttribute("boardDto", boardSrvc.getAll());
-		model.addAttribute("hostDto", new HostDto());
+		// 02. 게시판 조회
+		model.addAttribute("boardDto"	, boardSrvc.getAll());
+		model.addAttribute("hostDto"	, new HostDto());
 
-		return "list";
+		return "board/list";
 	}
 	
 	@GetMapping("/healthcheck")
 	public String healthCheck(Model model) {
 
 		// 01. 방명록 조회
-		model.addAttribute("boardDto", boardSrvc.getAll());
-		model.addAttribute("hostDto", new HostDto());
+		model.addAttribute("boardDto"	, boardSrvc.getAll());
+		model.addAttribute("hostDto"	, new HostDto());
 		
 		// 5회 이상의 요청일 경우 500 Internal Server Error 발생
 		requestCount++;
-	    if(requestCount > 5) throw new RuntimeException();
+	    if (requestCount > 5) throw new RuntimeException();
 
-	    return "list";
+	    return "board/list";
 	}
 	
 	@GetMapping("/downloadFile/{fileName:.+}")
@@ -147,7 +153,7 @@ public class BoardWeb {
 		Resource resource = new UrlResource(downloadFile.toURI());
 		String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
-		if(contentType == null) contentType = "text/plain";
+		if (contentType == null) contentType = "text/plain";
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(contentType))
