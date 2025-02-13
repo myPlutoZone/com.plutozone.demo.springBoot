@@ -47,6 +47,7 @@ public class IndexWeb {
 	 */
 	@GetMapping("/")
 	public String index() {
+		System.out.println("index");
 		logger.debug("--------------------------------------------");
 		logger.debug("/");
 		logger.debug("--------------------------------------------");
