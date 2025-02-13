@@ -33,6 +33,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringBootsApplication {
 
+	/**
+	 * @param args 인수들
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION:</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootsApplication.class, args);
 	}

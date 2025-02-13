@@ -19,9 +19,22 @@
  */
 package com.plutozone.common.dto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.InetAddress;
 
+/**
+ * @version 1.0.0
+ * @author pluto#plutozone.com
+ *
+ * @since 2025-01-01
+ * <p>DESCRIPTION:</p>
+ * <p>IMPORTANT:</p>
+ */
 public class HostDto {
+
+	private static final Logger logger = LoggerFactory.getLogger(HostDto.class);
 
 	private String name;
 	private String ip;
@@ -31,7 +44,8 @@ public class HostDto {
 			this.name	= InetAddress.getLocalHost().getHostName();
 			this.ip		= InetAddress.getLocalHost().getHostAddress();
 		}
-		catch (Exception ex) {
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".HostDto()] " + e.getMessage(), e);
 			this.name	= "";
 			this.ip		= "";
 		}
