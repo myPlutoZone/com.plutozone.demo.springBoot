@@ -75,6 +75,8 @@ public class BoardWeb {
 	@GetMapping("/board/list.web")
 	public String list(Model model) {
 
+		String viewPage = "error";
+
 		try {
 			model.addAttribute("boardList"	, boardSrvc.getAll());
 			model.addAttribute("hostDto"	, new HostDto());
@@ -94,16 +96,17 @@ public class BoardWeb {
 
 			// 03. 1~5초 사이로 랜덤하게 응답지연
 			Thread.sleep((long)randomRange(1,5) * 1000);
+			viewPage = "board/list";
 		}
 		catch (Exception e) {
 			logger.error("[" + this.getClass().getName() + ".list()] " + e.getMessage(), e);
 		}
 
-		return "board/list";
+		return viewPage;
 	}
 
 	/**
-	 * @param boardDto 게시판 DTO
+	 * @param boardDto 게시판DTO
 	 * @param model 모델
 	 * @return String
 	 *
@@ -113,42 +116,81 @@ public class BoardWeb {
 	 * <p>EXAMPLE:</p>
 	 */
 	@PostMapping("/board/writeProc.web")
-	public String insertPost(@ModelAttribute BoardDto boardDto, Model model) {
+	public String writeProc(@ModelAttribute BoardDto boardDto, Model model) {
 
-		// 01-1. 파일 첨부
-		if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
-			String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());
-			boardDto.setAttachedFile(uploadedFile);
+		String viewPage = "error";
+
+		try {
+			// 01-1. 파일 첨부
+			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
+				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());
+				boardDto.setAttachedFile(uploadedFile);
+			}
+
+			// 01-2. DB 저장
+			// boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+			if (boardSrvc.add(boardDto)) {
+				// 02. 게시판 조회
+				model.addAttribute("boardDto"	, boardSrvc.getAll());
+				model.addAttribute("hostDto"	, new HostDto());
+
+				viewPage = "board/list";
+			}
+
+
 		}
-		
-		// 01-2. DB 저장
-		boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-		boardSrvc.add(boardDto);
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".writeProc()] " + e.getMessage(), e);
+		}
 
-		// 02. 게시판 조회
-		model.addAttribute("boardDto"	, boardSrvc.getAll());
-		model.addAttribute("hostDto"	, new HostDto());
-
-		return "board/list";
+		return viewPage;
 	}
-	
-	@GetMapping("/healthcheck")
-	public String healthCheck(Model model) {
 
-		// 01. 방명록 조회
-		model.addAttribute("boardDto"	, boardSrvc.getAll());
-		model.addAttribute("hostDto"	, new HostDto());
-		
-		// 5회 이상의 요청일 경우 500 Internal Server Error 발생
-		requestCount++;
-	    if (requestCount > 5) throw new RuntimeException();
+	/**
+	 * @param model 모델
+	 * @return String
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION:</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
+	 */
+	@GetMapping("/board/checkHealth.web")
+	public String checkHealth(Model model) {
 
-	    return "board/list";
+		String viewPage = "error";
+
+		try {
+			// 01. 방명록 조회
+			model.addAttribute("boardDto"	, boardSrvc.getAll());
+			model.addAttribute("hostDto"	, new HostDto());
+
+			// 5회 이상의 요청일 경우 500 Internal Server Error 발생
+			requestCount++;
+			if (requestCount > 5) throw new RuntimeException();
+
+			viewPage = "board/list";
+		}
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".checkHealth()] " + e.getMessage(), e);
+		}
+
+		return viewPage;
 	}
-	
+
+	/**
+	 * @param fileName 파일명
+	 * @param  request 서블릿요청
+	 * @return ResponseEntity
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION:</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
+	 */
 	@GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
-		//
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
+
 		File downloadFile = new File(System.getProperty("user.dir") + "/upload/" + fileName);
 		Resource resource = new UrlResource(downloadFile.toURI());
 		String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
@@ -162,29 +204,40 @@ public class BoardWeb {
     }
 	
 	/**
-	 * 현재 Working Directory/upload 폴더에 파일을 첨부
-	 * @param file
-	 * @param uploaderName
-	 * @return 업로드한 파일명
+	 * @param file 파일바이너리
+	 * @param uploaderName 파일명
+	 * @return String 파일명
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION: 현재 Working Directory/upload 폴더에 파일을 업로드</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
 	 */
 	private String uploadFile(MultipartFile file, String uploaderName) {
 		//
-		String currentWorkingDirectory = System.getProperty("user.dir");
-		String originalFilename = file.getOriginalFilename(); // 클라이언트 시스템의 FullPath 포함한 파일명
-		String uploadFileName = this.getCurrentTimeMillisFormat() + "_" + uploaderName + "_" + FilenameUtils.getName(originalFilename);
-		File uploadFile = new File( currentWorkingDirectory + "/upload/" + uploadFileName);
+		String currentWorkingDirectory	= System.getProperty("user.dir");
+		String originalFilename			= file.getOriginalFilename();	// 클라이언트 시스템의 FullPath 포함한 파일명
+		String uploadFileName			= this.getCurrentTimeMillisFormat() + "_" + uploaderName + "_" + FilenameUtils.getName(originalFilename);
+		File uploadFile					= new File( currentWorkingDirectory + "/upload/" + uploadFileName);
 		
 		try {
 			uploadFile.getParentFile().mkdirs(); // upload 디렉토리가 없으면 생성
 			file.transferTo(uploadFile);
-		} catch (Exception ex) { } 
+		}
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".uploadFile()] " + e.getMessage(), e);
+		}
 		
 		return uploadFileName;
 	}
 	
 	/**
-	 * 현재시간을 "년월일시분초밀리초" 로 반환
-	 * @return
+	 * @return String
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION: 현재 시간을 "년월일시분초밀리초"로 반환</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
 	 */
 	private String getCurrentTimeMillisFormat() {
 		long currentTime = System.currentTimeMillis(); 
@@ -193,18 +246,24 @@ public class BoardWeb {
 	}
 	
 	/**
-	 * CPU 사용률을 높이기 위해 LOOP를 돌면서 산술연산(double 연산) 수행
-	 * @param loopCount
-	 * @return
+	 * @param loopCount 루프카운트
+	 * @return double
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION: CPU 사용률을 높이기 위해 LOOP를 돌면서 산술연산(double 연산) 수행</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
 	 */
 	private double useCPU(int loopCount) {
+
 		double result = 0;
+
 		for (int i = 1; i < loopCount; i++) {
 			result = i * Math.random() / loopCount;
 			for (int j = 1; j < loopCount; j++) {
 				result = i * j * Math.random() / loopCount;
 				for (int k = 1; k < loopCount; k++) {
-					// CPU 만 소모
+					// CPU 소모
 				}
 			}
 		}
@@ -212,10 +271,14 @@ public class BoardWeb {
 	}
 	
 	/**
-	 * 지정된 범위의 정수 1개를 램덤하게 반환
-	 * @param n1 - 하한값
-	 * @param n2 - 상한값
-	 * @return
+	 * @param n1 하한값
+	 * @param n2 상한값
+	 * @return int
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION: 지정된 범위의 정수 1개를 램덤하게 반환</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
 	 */
 	private int randomRange(int n1, int n2) {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;

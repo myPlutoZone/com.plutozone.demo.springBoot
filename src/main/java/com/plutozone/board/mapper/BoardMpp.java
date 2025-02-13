@@ -37,5 +37,5 @@ public interface BoardMpp {
 
 	List<BoardDto> selectAll();
 
-	void insert(BoardDto boardDto);
+	int insert(BoardDto boardDto);
 }

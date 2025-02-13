@@ -44,7 +44,8 @@ public class BoardSrvc {
 		return boardMpp.selectAll();
 	}
 	
-	public void add(BoardDto post) {
-		boardMpp.insert(post);
+	public boolean add(BoardDto post) {
+		if (boardMpp.insert(post) == 1) return true;
+		else return false;
 	}
 }
