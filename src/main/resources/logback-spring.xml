@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-3level]) %logger{5} - %msg %n" />
+	<property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %logger{5} - %msg %n" />
+	<property name="FILE_NAME" value="C:/_logs/com.plutozone.demo.springBoot.log" />
+	<property name="FILE_NAME_PATTERN" value="C:/_logs/com.plutozone.demo.springBoot-%d{yyyy-MM-dd-HH-mm}.%i.log" />
+
+	<!-- Console appender -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>${PATTERN_CONSOLE}</Pattern>
+		</encoder>
+	</appender>
+
+	<!-- File appender -->
+	<appender name="ROLLING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${PATTERN_FILE}</pattern>
+		</encoder>
+		<file>${FILE_NAME}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${FILE_NAME_PATTERN}</fileNamePattern>
+			<maxHistory>2</maxHistory>
+			<maxFileSize>10MB</maxFileSize>
+			<totalSizeCap>30MB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.springframework" level="WARN" additive="false">
+		<appender-ref ref="STDOUT"/>
+		<!-- <appender-ref ref="ROLLING_LOG_FILE"/> -->
+	</logger>
+	<logger name="org.mybatis" level="DEBUG" additive="false">
+		<appender-ref ref="STDOUT"/>
+		<!-- <appender-ref ref="ROLLING_LOG_FILE"/> -->
+	</logger>
+	<logger name="java.sql" level="DEBUG" additive="false">
+		<appender-ref ref="STDOUT"/>
+		<!-- <appender-ref ref="ROLLING_LOG_FILE"/> -->
+	</logger>
+	<logger name="com.plutozone" level="DEBUG" additive="false" >
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="ROLLING_LOG_FILE"/>
+	</logger>
+	<!--
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="ROLLING_LOG_FILE"/>
+	</root>
+	-->
+</configuration>
