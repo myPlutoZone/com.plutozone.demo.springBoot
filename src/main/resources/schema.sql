@@ -12,7 +12,7 @@
  *
  * Program		: com.plutozone.demo.springBoot
  * Description	:
- * Environment	: JRE 1.7 or more
+ * Environment	: JRE 1.8 or more
  * File			: schema.sql
  * Notes		: 데이터베이스 초기화
  * History		: [NO][Programmer][Description]

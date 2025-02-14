@@ -1,0 +1,48 @@
+/**
+ * YOU ARE STRICTLY PROHIBITED TO COPY, DISCLOSE, DISTRIBUTE, MODIFY OR USE THIS PROGRAM
+ * IN PART OR AS A WHOLE WITHOUT THE PRIOR WRITTEN CONSENT OF PLUTOZONE.COM.
+ * PLUTOZONE.COM OWNS THE INTELLECTUAL PROPERTY RIGHTS IN AND TO THIS PROGRAM.
+ * COPYRIGHT (C) 2025 PLUTOZONE.COM ALL RIGHTS RESERVED.
+
+ * 하기 프로그램에 대한 저작권을 포함한 지적재산권은 plutozone.com에 있으며,
+ * plutozone.com이 명시적으로 허용하지 않는 사용, 복사, 변경 및 제 3자에 의한 공개, 배포는 엄격히 금지되며
+ * plutozone.com의 지적재산권 침해에 해당된다.
+ * Copyright (C) 2025 plutozone.com All Rights Reserved.
+
+ * Program		: com.plutozone.demo.springBoot
+ * Description	:
+ * Environment	: JRE 1.8 or more
+ * File			: initial.css
+ * Notes		:
+ * History		: [NO][Programmer][Description]
+ *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
+ */
+@charset "UTF-8";
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,a,address,em,img,strong,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,video{margin:0px;padding:0px;border:0px}
+body{font-family:NanumGothic,Arial,"맑은 고딕",돋움;width:100%;height:100%;font-size:13px;color:#000;max-height:100%;max-width:100%}
+html:first-child select{padding-right:6px;height:24px}/* Opera 9 & Below Fix */
+option{vertical-align:middle;padding:3px 0}/* Firefox Fix */
+h1,h2,h3,h4,h5,h6{font-weight:normal;font-size:20px}
+img,fieldset,button{vertical-align:middle;border:0}
+iframe{padding:0px;margin:0px;border:0px;vertical-align:baseline}
+blockquote,q{quotes:none}
+q:before,q:after{content:""}
+ul,ol{list-style:none}
+table{border-collapse:collapse;border-spacing:0;empty-cells:show;table-layout:fixed}
+th{font-family:NanumGothicBold;text-align:center !important}
+address,em{font-style:normal}
+hr{display:none}
+caption{visibility:hidden;overflow:hidden;width:0;height:0;font-size:0;line-height:0;text-indent:-9999px}
+legend{position:absolute;visibility:hidden;overflow:hidden;width:0px;height:0px;font-size:0px;line-height:0;text-indent:-9999px}
+a,a:active,a:focus{text-decoration:none;color:#000}
+a:hover{text-decoration:none;color:#C0C0C0}
+input,textarea,button{line-height:1.2;vertical-align:middle}
+textarea{background:#FFFFFF;width:99%;height:100px;padding:0px 3px 0px;color:#454545;vertical-align:middle;border:1px solid #CCCCCC;resize:none;font-family:NanumGothic,Arial,"맑은 고딕",돋움}
+select{border:1px solid #d7d7d7;vertical-align:middle;line-height:28px;height:28px;color:#666;font-family:NanumGothic,Arial,"맑은 고딕",돋움}
+select:focus {background-color:#F0F0F0;}
+label{vertical-align:middle}
+input[type="text"],input[type="password"]{background:#FFFFFF;padding:0px 3px 0px;vertical-align:middle;border:1px solid #D7D7D7;color:#666;font-family:NanumGothic,Arial,"맑은 고딕",돋움;height:22px;line-height:22px}
+input[type="file"],input[type="button"]{vertical-align:middle;width:80%;margin-right:6px}
+input[type="checkbox"],input[type="radio"]{margin:0;padding:0;vertical-align:middle;width:13px;height:13px;line-height:13px}
+input:focus {background-color:#F0F0F0}

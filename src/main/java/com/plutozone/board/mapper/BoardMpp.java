@@ -11,7 +11,7 @@
 
  * Program		: com.plutozone.demo.springBoot
  * Description	:
- * Environment	: JRE 1.7 or more
+ * Environment	: JRE 1.8 or more
  * File			: BoardMpp.java
  * Notes		:
  * History		: [NO][Programmer][Description]

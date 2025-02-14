@@ -1,7 +1,8 @@
 # com.plutozone.demo.springBoot
 
 ## 0. TODO
-- image, css, javascript folder for *.css, *.html 
+- 시멘틱 태그(html) + html/css/javascript 주석 및 기본 모듈
+- BoardWeb + util
 
 ## 1. Build & Deploy
 ### 1-1. only Build

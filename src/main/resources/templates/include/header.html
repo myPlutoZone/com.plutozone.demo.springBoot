@@ -1,3 +1,4 @@
+<!--/*-->
 /**
  * YOU ARE STRICTLY PROHIBITED TO COPY, DISCLOSE, DISTRIBUTE, MODIFY OR USE THIS PROGRAM
  * IN PART OR AS A WHOLE WITHOUT THE PRIOR WRITTEN CONSENT OF PLUTOZONE.COM.
@@ -12,42 +13,11 @@
  * Program		: com.plutozone.demo.springBoot
  * Description	:
  * Environment	: JRE 1.8 or more
- * File			: BoardSrvc.java
+ * File			: header.html
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
  */
-package com.plutozone.board.service;
-
-import java.util.List;
-
-import com.plutozone.board.dto.BoardDto;
-import com.plutozone.board.mapper.BoardMpp;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-/**
- * @version 1.0.0
- * @author pluto#plutozone.com
- *
- * @since 2025-01-01
- * <p>DESCRIPTION:</p>
- * <p>IMPORTANT:</p>
- */
-@Service("com.plutozone.board.service.BoardSrvc")
-public class BoardSrvc {
-	
-	@Autowired
-	private BoardMpp boardMpp;
-
-	public List<BoardDto> getAll(){
-		return boardMpp.selectAll();
-	}
-
-	@Transactional
-	public boolean add(BoardDto post) {
-		if (boardMpp.insert(post) == 1) return true;
-		else return false;
-	}
-}
+<!--*/--><meta charset="UTF-8">
+	<title>com.plutozone.demo.springBoot</title>
+	<link rel="stylesheet" href="/css/common.css" type="text/css" title="common stylesheet" />

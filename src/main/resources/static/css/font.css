@@ -12,42 +12,30 @@
  * Program		: com.plutozone.demo.springBoot
  * Description	:
  * Environment	: JRE 1.8 or more
- * File			: BoardSrvc.java
+ * File			: font.css
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
  */
-package com.plutozone.board.service;
+@charset "UTF-8";
 
-import java.util.List;
-
-import com.plutozone.board.dto.BoardDto;
-import com.plutozone.board.mapper.BoardMpp;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-/**
- * @version 1.0.0
- * @author pluto#plutozone.com
- *
- * @since 2025-01-01
- * <p>DESCRIPTION:</p>
- * <p>IMPORTANT:</p>
- */
-@Service("com.plutozone.board.service.BoardSrvc")
-public class BoardSrvc {
-	
-	@Autowired
-	private BoardMpp boardMpp;
-
-	public List<BoardDto> getAll(){
-		return boardMpp.selectAll();
-	}
-
-	@Transactional
-	public boolean add(BoardDto post) {
-		if (boardMpp.insert(post) == 1) return true;
-		else return false;
-	}
+@font-face {
+    font-family:"NanumGothic";
+    src:url(./font/NanumGothic.eot);
+    src:url(./font/NanumGothic.eot?#iefix) format("embeded-opentype"),
+    url(./font/NanumGothic.woff) format("woff")
 }
+@font-face {
+    font-family:"NanumGothicBold";
+    src:url(./font/NanumGothicBold.eot);
+    src:url(./font/NanumGothicBold.eot?#iefix) format("embeded-opentype"),
+    url(./font/NanumGothicBold.woff) format("woff")
+}
+/*
+@font-face {
+	font-family:"NanumGothicExtraBold";
+	src:url(./font/NanumGothicExtraBold.eot);
+	src:url(./font/NanumGothicExtraBold.eot?#iefix) format("embeded-opentype"),
+		url(./font/NanumGothicExtraBold.woff) format("woff")
+}
+*/

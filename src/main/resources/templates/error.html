@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 	<meta charset="UTF-8">
-	<link href="/common.css" rel="stylesheet">
-	<link href="/board.css" rel="stylesheet">
-	<title>com.plutozone.demo.springBoot - 에러</title>
+	<link href="/css/common.css" rel="stylesheet">
+	<link href="/css/board.css" rel="stylesheet">
+	<title>com.plutozone.demo.springBoot - 404</title>
 </head>
 <body>
 	<div class="guestbook" style="display: block;">
@@ -12,10 +12,13 @@
 			<li>
 				<p class="memo">
 					<!--/*
-					[2025-01-01][pluto#plutozone.com][TODO: ERROR Page 등]
+						[2025-01-01][pluto#plutozone.com][TODO: Custom Error Page instead of Thymeleaf]
 					Some internal error has occurred in [[${hostDto.name}]]([[${hostDto.ip}]])
 					*/-->
-					Some internal error has occurred in HOSTNAME(IP)
+					<h1>Error</h1>
+					<p th:text="${status}"></p>
+					<p th:text="${error}"></p>
+					<p th:text="${message}"></p>
 				</p>
 			</li>
 		</ul>
