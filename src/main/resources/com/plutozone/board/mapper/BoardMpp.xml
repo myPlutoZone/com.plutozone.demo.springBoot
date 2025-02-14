@@ -4,7 +4,7 @@
 		SELECT
 			MBR_NM
 			, CONTENT
-			, FILE_SAVE
+			, IFNULL(FILE_SAVE, '') FILE_SAVE
 			, DT_REG
 		FROM
 			TB_BRD

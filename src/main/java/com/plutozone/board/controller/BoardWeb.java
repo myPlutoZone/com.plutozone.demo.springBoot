@@ -121,6 +121,8 @@ public class BoardWeb {
 		String viewPage = "error";
 
 		try {
+			logger.debug("/board/writeProc.web");
+
 			// 01-1. 파일 첨부
 			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
 				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getMbr_nm());
@@ -131,13 +133,11 @@ public class BoardWeb {
 			// boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
 			if (boardSrvc.add(boardDto)) {
 				// 02. 게시판 조회
-				model.addAttribute("boardDto"	, boardSrvc.getAll());
+				model.addAttribute("boardList"	, boardSrvc.getAll());
 				model.addAttribute("hostDto"	, new HostDto());
 
 				viewPage = "board/list";
 			}
-
-
 		}
 		catch (Exception e) {
 			logger.error("[" + this.getClass().getName() + ".writeProc()] " + e.getMessage(), e);
