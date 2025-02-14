@@ -31,42 +31,26 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class BoardDto {
 	
-	private String name;
-	private String writeDate;
+	private String mbr_nm;
+	private String dt_reg;
 	private String content;
 	private MultipartFile uploadingFile;
-	private String attachedFile;
+	private String file_save;
 
 	public BoardDto() {
 	}
 
-	public BoardDto(String name, String writeDate, String content) {
-		this.name		= name;
-		this.writeDate	= writeDate;
+	public BoardDto(String mbr_nm, String dt_reg, String content) {
+		this.mbr_nm		= mbr_nm;
+		this.dt_reg		= dt_reg;
 		this.content	= content;
 	}
 	
-	public BoardDto(String name, String writeDate, String content, MultipartFile uploadingFile) {
-		this.name			= name;
-		this.writeDate		= writeDate;
+	public BoardDto(String mbr_nm, String dt_reg, String content, MultipartFile uploadingFile) {
+		this.mbr_nm			= mbr_nm;
+		this.dt_reg			= dt_reg;
 		this.content		= content;
 		this.uploadingFile	= uploadingFile;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getWriteDate() {
-		return writeDate;
-	}
-
-	public void setWriteDate(String writeDate) {
-		this.writeDate = writeDate;
 	}
 
 	public String getContent() {
@@ -77,6 +61,29 @@ public class BoardDto {
 		this.content = content;
 	}
 
+	public String getDt_reg() {
+		return dt_reg;
+	}
+
+	public void setDt_reg(String dt_reg) {
+		this.dt_reg = dt_reg;
+	}
+
+	public String getFile_save() {
+		return file_save;
+	}
+
+	public void setFile_save(String file_save) {
+		this.file_save = file_save;
+	}
+
+	public String getMbr_nm() {
+		return mbr_nm;
+	}
+
+	public void setMbr_nm(String mbr_nm) {
+		this.mbr_nm = mbr_nm;
+	}
 
 	public MultipartFile getUploadingFile() {
 		return uploadingFile;
@@ -86,23 +93,14 @@ public class BoardDto {
 		this.uploadingFile = uploadingFile;
 	}
 
-	public String getAttachedFile() {
-		return attachedFile;
-	}
-
-	public void setAttachedFile(String attachedFile) {
-		this.attachedFile = attachedFile;
-	}
-
 	@Override
 	public String toString() {
 		StringBuffer sb =  new StringBuffer();
-		sb.append("작성자=" + this.name + "\n");
-		sb.append("작성일시=" + this.writeDate + "\n");
-		sb.append("내용=" + this.content + "\n");
-		sb.append("첨부파일=" + this.attachedFile + "\n");
+		sb.append("작성자="		+ this.mbr_nm + "\n");
+		sb.append("작성일시="	+ this.dt_reg + "\n");
+		sb.append("내용="		+ this.content + "\n");
+		sb.append("첨부파일="	+ this.file_save + "\n");
 		sb.append("\n");
 		return sb.toString();
 	}
-	
 }

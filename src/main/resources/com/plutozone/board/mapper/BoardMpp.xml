@@ -4,7 +4,7 @@
 		SELECT
 			MBR_NM
 			, CONTENT
-			, FILE_NM
+			, FILE_SAVE
 			, DT_REG
 		FROM
 			TB_BRD
@@ -14,8 +14,8 @@
 
     <insert id="insert" parameterType="com.plutozone.board.dto.BoardDto">
 		INSERT INTO TB_BRD
-			(MBR_NM, CONTENT, FILE_NM, DT_REG)
+			(MBR_NM, CONTENT, FILE_SAVE, DT_REG)
 		VALUES
-			(#{mbr_nm}, #{content}, #{file_nm}, NOW())
+			(#{mbr_nm}, #{content}, #{file_save}, NOW())
     </insert>
 </mapper>

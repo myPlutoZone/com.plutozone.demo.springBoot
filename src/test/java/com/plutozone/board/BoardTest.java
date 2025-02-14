@@ -29,7 +29,7 @@ class BoardTest {
 	@Test
 	void testSetName() {
 		BoardDto boardDto = new BoardDto("TESTER", "2025-01-01 00:00:00", "Hi, Spring Boot");
-		boardDto.setName("DEVOPS");
-		assertEquals("DEVOPS", boardDto.getName());
+		boardDto.setMbr_nm("DEVOPS");
+		assertEquals("DEVOPS", boardDto.getMbr_nm());
 	}
 }

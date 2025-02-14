@@ -123,8 +123,8 @@ public class BoardWeb {
 		try {
 			// 01-1. 파일 첨부
 			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
-				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getName());
-				boardDto.setAttachedFile(uploadedFile);
+				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getMbr_nm());
+				boardDto.setFile_save(uploadedFile);
 			}
 
 			// 01-2. DB 저장
