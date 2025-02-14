@@ -2,7 +2,8 @@
 <mapper namespace="com.plutozone.board.mapper.BoardMpp">
 	<select id="selectAll" resultType="com.plutozone.board.dto.BoardDto">
 		SELECT
-			MBR_NM
+		  	SEQ_BRD
+			, MBR_NM
 			, CONTENT
 			, IFNULL(FILE_SAVE, '') FILE_SAVE
 			, DT_REG

@@ -30,12 +30,14 @@ import org.springframework.web.multipart.MultipartFile;
  * <p>IMPORTANT:</p>
  */
 public class BoardDto {
-	
-	private String mbr_nm;
-	private String dt_reg;
-	private String content;
-	private MultipartFile uploadingFile;
-	private String file_save;
+
+	private Integer seq_brd					= 0;
+	private String mbr_nm					= "";
+	private String dt_reg					= "";
+	private String content					= "";
+	private MultipartFile uploadingFile		= null;
+	private String file_save				= null;
+
 
 	public BoardDto() {
 	}
@@ -51,6 +53,14 @@ public class BoardDto {
 		this.dt_reg			= dt_reg;
 		this.content		= content;
 		this.uploadingFile	= uploadingFile;
+	}
+
+	public int getSeq_brd() {
+		return seq_brd;
+	}
+
+	public void setSeq_brd(int seq_brd) {
+		this.seq_brd = seq_brd;
 	}
 
 	public String getContent() {

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * <p>DESCRIPTION:</p>
  * <p>IMPORTANT:</p>
  */
-@Controller
+@Controller("com.plutozone.IndexWeb")
 public class IndexWeb {
 	
 	private static final Logger logger = LoggerFactory.getLogger(IndexWeb.class);

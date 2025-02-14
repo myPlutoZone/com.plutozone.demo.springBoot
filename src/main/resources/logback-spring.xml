@@ -17,11 +17,11 @@
 		<encoder><pattern>${PATTERN_FILE}</pattern></encoder>
 		<file>${FILE_PATH}/${FILE_NAME}.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${FILE_PATH}/${FILE_NAME}-%d{yyyy-MM-dd-HH-mm}.%i.log</fileNamePattern>
+			<fileNamePattern>${FILE_PATH}/${FILE_NAME}-%d{yyyy-MM-dd-HH-mm}_%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>100MB</maxFileSize>
+				<maxFileSize>1024MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
-			<maxHistory>365</maxHistory>
+			<maxHistory>10</maxHistory>
 		</rollingPolicy>
 	</appender>
 

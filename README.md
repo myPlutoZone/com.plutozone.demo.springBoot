@@ -1,13 +1,13 @@
 # com.plutozone.demo.springBoot
 
 ## 0. TODO
-- Development Standards
 - image, css, javascript folder for *.css, *.html 
 
 ## 1. Build & Deploy
 ### 1-1. only Build
 ```cmd
 C:\>mvnw.cmd clean package
+C:\>gradlew.bat clean build         # gradlew.bat clean jar
 ```
 
 ### 1-2. Build & Deploy by Jenkins + Docker

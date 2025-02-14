@@ -38,10 +38,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -52,7 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
  * <p>DESCRIPTION:</p>
  * <p>IMPORTANT:</p>
  */
-@Controller
+@Controller("com.plutozone.board.controller.BoardWeb")
 public class BoardWeb {
 
 	private static final Logger logger = LoggerFactory.getLogger(BoardWeb.class);
@@ -62,6 +59,32 @@ public class BoardWeb {
 
 	// error 및 rollback 시뮬레이션용 - 요청이 5회 이상일때 오류 발생 재연에 사용
 	private int requestCount = 0;
+
+	/**
+	 * @param boardDto 게시판DTO
+	 * @param model 모델
+	 * @return String
+	 *
+	 * @since 2025-01-01
+	 * <p>DESCRIPTION:</p>
+	 * <p>IMPORTANT:</p>
+	 * <p>EXAMPLE:</p>
+	 */
+	@PostMapping("/board/modifyForm.web")
+	public String modifyForm(@ModelAttribute BoardDto boardDto, Model model) {
+
+		String viewPage = "error";
+
+		try {
+			model.addAttribute("boardDto", boardDto);
+			viewPage = "board/modifyForm";
+		}
+		catch (Exception e) {
+			logger.error("[" + this.getClass().getName() + ".modifyForm()] " + e.getMessage(), e);
+		}
+
+		return viewPage;
+	}
 
 	/**
 	 * @param model 모델
@@ -121,8 +144,6 @@ public class BoardWeb {
 		String viewPage = "error";
 
 		try {
-			logger.debug("/board/writeProc.web");
-
 			// 01-1. 파일 첨부
 			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
 				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getMbr_nm());
@@ -132,12 +153,16 @@ public class BoardWeb {
 			// 01-2. DB 저장
 			// boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
 			if (boardSrvc.add(boardDto)) {
-				// 02. 게시판 조회
-				model.addAttribute("boardList"	, boardSrvc.getAll());
-				model.addAttribute("hostDto"	, new HostDto());
 
-				viewPage = "board/list";
+				// [2025-01-01][pluto#plutozone.com][TODO: 메시지 출력 후 리다이렉트]
+				return "redirect:/board/list.web";
+
+				// 02. 게시판 조회
+				// model.addAttribute("boardList"	, boardSrvc.getAll());
+				// model.addAttribute("hostDto"	, new HostDto());
+				// viewPage = "board/list";
 			}
+
 		}
 		catch (Exception e) {
 			logger.error("[" + this.getClass().getName() + ".writeProc()] " + e.getMessage(), e);
@@ -155,14 +180,14 @@ public class BoardWeb {
 	 * <p>IMPORTANT:</p>
 	 * <p>EXAMPLE:</p>
 	 */
-	@GetMapping("/board/checkHealth.web")
+	@GetMapping("/board/checkSystemError.web")
 	public String checkHealth(Model model) {
 
 		String viewPage = "error";
 
 		try {
 			// 01. 방명록 조회
-			model.addAttribute("boardDto"	, boardSrvc.getAll());
+			model.addAttribute("boardList"	, boardSrvc.getAll());
 			model.addAttribute("hostDto"	, new HostDto());
 
 			// 5회 이상의 요청일 경우 500 Internal Server Error 발생

@@ -25,6 +25,7 @@ import com.plutozone.board.dto.BoardDto;
 import com.plutozone.board.mapper.BoardMpp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @version 1.0.0
@@ -34,16 +35,17 @@ import org.springframework.stereotype.Service;
  * <p>DESCRIPTION:</p>
  * <p>IMPORTANT:</p>
  */
-@Service
+@Service("com.plutozone.board.service.BoardSrvc")
 public class BoardSrvc {
 	
 	@Autowired
 	private BoardMpp boardMpp;
-	
+
 	public List<BoardDto> getAll(){
 		return boardMpp.selectAll();
 	}
-	
+
+	@Transactional
 	public boolean add(BoardDto post) {
 		if (boardMpp.insert(post) == 1) return true;
 		else return false;
