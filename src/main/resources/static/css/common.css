@@ -22,6 +22,14 @@
 @import url(./initial.css);
 @import url(./font.css);
 
+body {margin:auto;text-align:center}
+ul {padding:5px}
+li {padding:5px}
+
+header  {font-size:20px;padding:10px}
+nav     {font-size:15px;padding:10px}
+footer  {font-size:12px;padding:10px}
+
 .txtLeft  {text-align:left   !important}
 .txtCenter{text-align:center !important}
 .txtRight {text-align:right  !important}

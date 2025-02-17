@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<link href="/css/common.css" rel="stylesheet">
-	<link href="/css/board.css" rel="stylesheet">
-	<title>com.plutozone.demo.springBoot - 목록</title>
+	<th:block th:replace="~{/include/header}"></th:block>
 	<script>
 		/**
 		 * @param seq_brd 게시글 일련번호
@@ -42,51 +39,55 @@
 	</script>
 </head>
 <body>
-	<div class="guestbook" style="display: block;">
-		<ul class="cont">
-			<li>
-				<p class="memo">
-					This is running in [[${hostDto.name}]]([[${hostDto.ip}]])
-				</p>
-			</li>
-		</ul>
-	</div>
-	
-	<h4 class="g-top">com.plutozone.demo.springBoot by IntelliJ + Maven</h4>
-	<div class="top-img">
-		<img src="/image/bg-board.jpg" alt="">
-	</div>
-	<form action="/board/writeProc.web" method="post" id="frmMain" enctype="multipart/form-data">
-		<input type="hidden" name="seq_brd" id="seq_brd" value="0" />
-		<div class="g-cont">
+<form action="/board/writeProc.web" method="POST" id="frmMain" enctype="multipart/form-data">
+<input type="hidden" name="seq_brd" id="seq_brd" value="0" />
+<div class="container">
+	<header>
+		com.plutozone.demo.springBoot at This is running in [[${hostDto.name}]]([[${hostDto.ip}]])
+	</header>
+	<nav>
+		<a href="/">메인</a> | <a href="/board/list.web">게시판</a>
+	</nav>
+	<section class="content">
+		<nav></nav>
+		<article class="txtLeft">
 			<ul>
-				<li class="name">
-					<label>
-						<input id="mbr_nm" name="mbr_nm" type="text" maxlength="20" placeholder="이름" class="form-control">
-					</label>
+				<li th:each="boardDto : ${boardList}">
+					[[${boardDto.mbr_nm}]] at [[${boardDto.dt_reg}]]
+					<a th:href="'javascript:modifyForm(' + ${boardDto.seq_brd} + ');'"><p th:text="${boardDto.content}"></p></a>
+					<th:block th:if="${boardDto.file_save != ''}">
+						첨부 파일: <a th:href="@{'/downloadFile/' + ${boardDto.file_save}}" th:text="${boardDto.file_save}"></a>
+					</th:block>
 				</li>
-				<li class="msg">
-					<label>
-						<textarea id="content" name="content" maxlength="200" placeholder="내용을 입력해주세요" class="form-control" rows="3"></textarea>
-					</label>
-				</li>
-				<li>파일첨부<input type="file" name="uploadingFile" class="form-control"></li>
 			</ul>
-			<p class="btn btn-lg" onclick="checkSubmit();">게시물 남기기</p>
-		</div>
-	</form>
-
-	<div class="guestbook" style="display: block;">
-		<ul class="cont">
-			<li th:each="boardDto : ${boardList}">
-				<p class="name" th:text="${boardDto.mbr_nm}"></p>
-				<p class="date" th:text="${boardDto.dt_reg}"></p>
-				<a th:href="'javascript:modifyForm(' + ${boardDto.seq_brd} + ');'"><p class="memo" th:text="${boardDto.content}"></p></a>
-				<th:block th:if="${boardDto.file_save != ''}">
-					첨부파일: <a th:href="@{'/downloadFile/' + ${boardDto.file_save}}" th:text="${boardDto.file_save}"></a>
-				</th:block>
-			</li>
-		</ul>
-	</div>
+		</article>
+		<article class="txtCenter">
+			<ul style="text-align: left;">
+				<li>
+					<label>
+						<input id="mbr_nm" name="mbr_nm" type="text" maxlength="8" placeholder="이름">
+					</label>
+				</li>
+				<li>
+					<label>
+						<textarea id="content" name="content" maxlength="256" rows="3" placeholder="내용을 입력해주세요"></textarea>
+					</label>
+				</li>
+				<li>
+					파일 첨부 <input type="file" name="uploadingFile">
+				</li>
+				<li style="text-align: center;">
+					<a href="javascript:checkSubmit();">[게시물 남기기]</a>
+				</li>
+			</ul>
+		</article>
+		<article class="txtRight"></article>
+		<aside></aside>
+	</section>
+	<footer>
+		<th:block th:replace="~{/include/footer}"></th:block>
+	</footer>
+</div>
+</form>
 </body>
 </html>

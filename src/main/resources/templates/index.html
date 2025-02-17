@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 	<th:block th:replace="~{/include/header}"></th:block>
 </head>
 <body>
-	<a href="/board/list.web">게시판</a>
-	<th:block th:replace="~{/include/footer}"></th:block>
+<form id="frmMain" method="POST">
+<div class="container">
+	<header>
+		com.plutozone.demo.springBoot
+	</header>
+	<nav>
+		<a href="/">메인</a> | <a href="/board/list.web">게시판</a>
+	</nav>
+	<section class="content">
+		<nav></nav>
+		<article class="txtLeft"></article>
+		<article class="txtCenter"></article>
+		<article class="txtRight"></article>
+		<aside></aside>
+	</section>
+	<footer>
+		<th:block th:replace="~{/include/footer}"></th:block>
+	</footer>
+</div>
+</form>
 </body>
 </html>
