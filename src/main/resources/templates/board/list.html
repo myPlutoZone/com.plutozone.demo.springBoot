@@ -56,7 +56,7 @@
 					[[${boardDto.mbr_nm}]] at [[${boardDto.dt_reg}]]
 					<a th:href="'javascript:modifyForm(' + ${boardDto.seq_brd} + ');'"><p th:text="${boardDto.content}"></p></a>
 					<th:block th:if="${boardDto.file_save != ''}">
-						첨부 파일: <a th:href="@{'/downloadFile/' + ${boardDto.file_save}}" th:text="${boardDto.file_save}"></a>
+						첨부 파일: <a th:href="@{'/board/download/' + ${boardDto.file_save}}" th:text="${boardDto.file_save}"></a>
 					</th:block>
 				</li>
 			</ul>

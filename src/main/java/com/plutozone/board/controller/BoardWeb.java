@@ -20,13 +20,13 @@
 package com.plutozone.board.controller;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import com.plutozone.board.dto.BoardDto;
 import com.plutozone.board.service.BoardSrvc;
 import com.plutozone.common.dto.HostDto;
+import com.plutozone.util.Datetime;
+import com.plutozone.util.Number;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,22 +100,9 @@ public class BoardWeb {
 		try {
 			model.addAttribute("boardList"	, boardSrvc.getAll());
 			model.addAttribute("hostDto"	, new HostDto());
-
-			/*
-			// 5회 이상의 요청일 경우 error 페이지로 이동
-			// 잘못된 버전 배포 후 롤백 데모시 주석 해제할 것!!!
-			requestCount++;
-			if (requestCount > 5) {
-				model.addAttribute("health", "UnHealthy");
-				return "error";
-			}
-			*/
-
-			// 02. 의미없이 CPU 사용량 증가
-			this.useCPU(1000);
-
-			// 03. 1~5초 사이로 랜덤하게 응답지연
-			Thread.sleep((long)randomRange(1,5) * 1000);
+			
+			// 1~5초 사이로 랜덤하게 응답지연
+			Thread.sleep((long) Number.randomRange(1, 5) * 1000);
 			viewPage = "board/list";
 		}
 		catch (Exception e) {
@@ -141,20 +128,21 @@ public class BoardWeb {
 		String viewPage = "error";
 
 		try {
-			// 01-1. 파일 첨부
+			// 파일 첨부
 			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
-				String uploadedFile = this.uploadFile(boardDto.getUploadingFile(), boardDto.getMbr_nm());
+				// [2025-01-01][pluto@plutozone.com][TODO-필수: 원본 및 저장 파일명(저장 폴더 자동 생성 및 UUID 기반 파일명 포함)으로 개선(파일 다운로드 시 원본 파일명 적용)]
+				String uploadedFile = this.upload(boardDto.getUploadingFile(), boardDto.getMbr_nm());
 				boardDto.setFile_save(uploadedFile);
 			}
 
-			// 01-2. DB 저장
+			// DB 저장
 			// boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
 			if (boardSrvc.add(boardDto)) {
 
-				// [2025-01-01][pluto#plutozone.com][TODO: 메시지 출력 후 리다이렉트]
+				// [2025-01-01][pluto#plutozone.com][TODO-필수: 메시지 출력 후 리다이렉트]
 				return "redirect:/board/list.web";
 
-				// 02. 게시판 조회
+				// 게시판 조회
 				// model.addAttribute("boardList"	, boardSrvc.getAll());
 				// model.addAttribute("hostDto"	, new HostDto());
 				// viewPage = "board/list";
@@ -178,9 +166,11 @@ public class BoardWeb {
 	 * <p>IMPORTANT:</p>
 	 * <p>EXAMPLE:</p>
 	 */
-	@GetMapping("/downloadFile/{fileName:.+}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
-
+	@GetMapping("/board/download/{fileName:.+}")
+	public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) throws Exception {
+		
+		// [2025-01-01][pluto@plutozone.com][TODO-필수: 파일 업로드 시 최상위 경로 from Property]
+		// [2025-01-01][pluto@plutozone.com][TODO-필수: 원본 및 저장 파일명 from DB]
 		File downloadFile = new File(System.getProperty("user.dir") + "/upload/" + fileName);
 		Resource resource = new UrlResource(downloadFile.toURI());
 		String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
@@ -203,11 +193,11 @@ public class BoardWeb {
 	 * <p>IMPORTANT:</p>
 	 * <p>EXAMPLE:</p>
 	 */
-	private String uploadFile(MultipartFile file, String uploaderName) {
+	private String upload(MultipartFile file, String uploaderName) {
 		//
 		String currentWorkingDirectory	= System.getProperty("user.dir");
 		String originalFilename			= file.getOriginalFilename();	// 클라이언트 시스템의 FullPath 포함한 파일명
-		String uploadFileName			= this.getCurrentTimeMillisFormat() + "_" + uploaderName + "_" + FilenameUtils.getName(originalFilename);
+		String uploadFileName			= Datetime.getNow("yyyyMMddHHmmssSSS") + "_" + uploaderName + "_" + FilenameUtils.getName(originalFilename);
 		File uploadFile					= new File( currentWorkingDirectory + "/upload/" + uploadFileName);
 		
 		try {
@@ -219,58 +209,5 @@ public class BoardWeb {
 		}
 		
 		return uploadFileName;
-	}
-	
-	/**
-	 * @return String
-	 *
-	 * @since 2025-01-01
-	 * <p>DESCRIPTION: 현재 시간을 "년월일시분초밀리초"로 반환</p>
-	 * <p>IMPORTANT:</p>
-	 * <p>EXAMPLE:</p>
-	 */
-	private String getCurrentTimeMillisFormat() {
-		long currentTime = System.currentTimeMillis(); 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS"); 
-		return dateFormat.format(new Date(currentTime)); 
-	}
-	
-	/**
-	 * @param loopCount 루프카운트
-	 * @return double
-	 *
-	 * @since 2025-01-01
-	 * <p>DESCRIPTION: CPU 사용률을 높이기 위해 LOOP를 돌면서 산술연산(double 연산) 수행</p>
-	 * <p>IMPORTANT:</p>
-	 * <p>EXAMPLE:</p>
-	 */
-	private double useCPU(int loopCount) {
-
-		double result = 0;
-
-		for (int i = 1; i < loopCount; i++) {
-			result = i * Math.random() / loopCount;
-			for (int j = 1; j < loopCount; j++) {
-				result = i * j * Math.random() / loopCount;
-				for (int k = 1; k < loopCount; k++) {
-					// CPU 소모
-				}
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * @param n1 하한값
-	 * @param n2 상한값
-	 * @return int
-	 *
-	 * @since 2025-01-01
-	 * <p>DESCRIPTION: 지정된 범위의 정수 1개를 램덤하게 반환</p>
-	 * <p>IMPORTANT:</p>
-	 * <p>EXAMPLE:</p>
-	 */
-	private int randomRange(int n1, int n2) {
-		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
 }
