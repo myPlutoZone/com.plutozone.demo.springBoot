@@ -36,7 +36,7 @@ public class BoardDto {
 	private String dt_reg					= "";
 	private String content					= "";
 	private MultipartFile uploadingFile		= null;
-	private String file_save				= null;
+	private String file_save				= "";
 
 
 	public BoardDto() {

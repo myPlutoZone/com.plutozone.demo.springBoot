@@ -36,8 +36,8 @@ public class HostDto {
 
 	private static final Logger logger = LoggerFactory.getLogger(HostDto.class);
 
-	private String name;
-	private String ip;
+	private String name		= "";
+	private String ip		= "";
 
 	public HostDto() {
 		try {

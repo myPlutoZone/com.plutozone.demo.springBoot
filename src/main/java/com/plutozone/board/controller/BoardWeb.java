@@ -57,9 +57,6 @@ public class BoardWeb {
 	@Autowired
 	private BoardSrvc boardSrvc;
 
-	// error 및 rollback 시뮬레이션용 - 요청이 5회 이상일때 오류 발생 재연에 사용
-	private int requestCount = 0;
-
 	/**
 	 * @param boardDto 게시판DTO
 	 * @param model 모델
@@ -166,38 +163,6 @@ public class BoardWeb {
 		}
 		catch (Exception e) {
 			logger.error("[" + this.getClass().getName() + ".writeProc()] " + e.getMessage(), e);
-		}
-
-		return viewPage;
-	}
-
-	/**
-	 * @param model 모델
-	 * @return String
-	 *
-	 * @since 2025-01-01
-	 * <p>DESCRIPTION:</p>
-	 * <p>IMPORTANT:</p>
-	 * <p>EXAMPLE:</p>
-	 */
-	@GetMapping("/board/checkSystemError.web")
-	public String checkHealth(Model model) {
-
-		String viewPage = "error";
-
-		try {
-			// 01. 방명록 조회
-			model.addAttribute("boardList"	, boardSrvc.getAll());
-			model.addAttribute("hostDto"	, new HostDto());
-
-			// 5회 이상의 요청일 경우 500 Internal Server Error 발생
-			requestCount++;
-			if (requestCount > 5) throw new RuntimeException();
-
-			viewPage = "board/list";
-		}
-		catch (Exception e) {
-			logger.error("[" + this.getClass().getName() + ".checkHealth()] " + e.getMessage(), e);
 		}
 
 		return viewPage;

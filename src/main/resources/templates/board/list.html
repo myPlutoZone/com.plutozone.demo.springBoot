@@ -12,8 +12,8 @@
 		 * <p>EXAMPLE:</p>
 		 */
 		function modifyForm(seq_brd) {
-			document.getElementById("seq_brd").value = seq_brd;
-			document.getElementById("frmMain").action = "/board/modifyForm.web";
+			document.getElementById("seq_brd").value	= seq_brd;
+			document.getElementById("frmMain").action	= "/board/modifyForm.web";
 			
 			document.getElementById("frmMain").submit();
 		}
@@ -46,7 +46,7 @@
 		com.plutozone.demo.springBoot at This is running in [[${hostDto.name}]]([[${hostDto.ip}]])
 	</header>
 	<nav>
-		<a href="/">메인</a> | <a href="/board/list.web">게시판</a>
+		<th:block th:replace="~{/include/gnb}"></th:block>
 	</nav>
 	<section class="content">
 		<nav></nav>
