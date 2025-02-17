@@ -42,6 +42,8 @@ public class SpringBootsApplication {
 	 * <p>EXAMPLE:</p>
 	 */
 	public static void main(String[] args) {
+		
+		// [2025-01-01][pluto#plutozone.com][TODO-필수: 환경 변수(로컬, 개발 및 상용 등), 암호화, API(JSON 포함) 등]
 		SpringApplication.run(SpringBootsApplication.class, args);
 	}
 }

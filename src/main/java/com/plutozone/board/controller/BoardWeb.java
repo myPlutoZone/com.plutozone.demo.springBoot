@@ -98,6 +98,7 @@ public class BoardWeb {
 		String viewPage = "error";
 
 		try {
+			// [2025-01-01][pluto#plutozone.com][TODO-필수: 페이징]
 			model.addAttribute("boardList"	, boardSrvc.getAll());
 			model.addAttribute("hostDto"	, new HostDto());
 			
