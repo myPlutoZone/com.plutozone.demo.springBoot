@@ -131,7 +131,7 @@ public class BoardWeb {
 		try {
 			// 파일 첨부
 			if (boardDto.getUploadingFile().getOriginalFilename().equals("") == false) {
-				// [2025-01-01][pluto@plutozone.com][TODO-필수: 원본 및 저장 파일명(저장 폴더 자동 생성 및 UUID 기반 파일명 포함)으로 개선(파일 다운로드 시 원본 파일명 적용)]
+				// [2025-01-01][pluto#plutozone.com][TODO-필수: 원본 및 저장 파일명(저장 폴더 자동 생성 및 UUID 기반 파일명 포함)으로 개선(파일 다운로드 시 원본 파일명 적용)]
 				String uploadedFile = this.upload(boardDto.getUploadingFile(), boardDto.getMbr_nm());
 				boardDto.setFile_save(uploadedFile);
 			}
@@ -170,8 +170,8 @@ public class BoardWeb {
 	@GetMapping("/board/download/{fileName:.+}")
 	public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) throws Exception {
 		
-		// [2025-01-01][pluto@plutozone.com][TODO-필수: 파일 업로드 시 최상위 경로 from Property]
-		// [2025-01-01][pluto@plutozone.com][TODO-필수: 원본 및 저장 파일명 from DB]
+		// [2025-01-01][pluto#plutozone.com][TODO-필수: 파일 업로드 시 최상위 경로 from Property]
+		// [2025-01-01][pluto#plutozone.com][TODO-필수: 원본 및 저장 파일명 from DB]
 		File downloadFile = new File(System.getProperty("user.dir") + "/upload/" + fileName);
 		Resource resource = new UrlResource(downloadFile.toURI());
 		String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
