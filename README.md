@@ -20,19 +20,63 @@ plutozone.com의 지적재산권 침해에 해당된다.
 
 
 # Build & Deploy
-## only Build
+## Plan A) only Build
 ```cmd
 C:\>mvnw.cmd clean package
 C:\>gradlew.bat clean build         # gradlew.bat clean jar
 ```
 
-## Build & Deploy by Jenkins + Docker
-1. checkout Source
-2. build Source
+
+## Plan B) Build & Deploy at Server by Shell + GitHub
+```bash
+# Install JDK and Git Client at Server only once.
+$ vi ~/run.sh
+#!/bin/bash
+
+export JAVA_HOME=/usr/local/java/jdk-21.0.6
+# export JRE_HOME=$JAVA_HOME/jre
+# export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+
+# echo $JAVA_HOME
+# echo $PATH
+# java -version
+
+# Stop Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
+PID=`ps -ef | grep demo.springBoot-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}'`
+kill -9 $PID
+sleep 3
+
+# Remove Source Folder
+rm -rf com.plutozone.demo.springBoot
+sleep 3
+
+# Checkout Source from GitHub.
+git clone https://github.com/myPlutoZone/com.plutozone.demo.springBoot.git
+sleep 3
+
+cd com.plutozone.demo.springBoot
+
+# Clean and Build
+chmod 754 mvnw
+./mvnw clean package
+sleep 3
+
+# Start Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
+java -jar com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar &
+```
+
+
+## Plan C) Build & Deploy at Container by Shell + Docker + GitHub
+
+
+## Build & Deploy at Container by Jenkins + Docker + GitHub
+1. Checkout Source.
+2. Build.
 3. ... Unit, SonarQube, ...
-4. build Docker Image(Linux) include Source(springBoot.jar)
-5. push Docker Image
+4. Build Docker Image(Linux) include Source(springBoot.jar).
+5. Push Docker Image.
 6. ... run MySQL(schema.sql), ...
-7. run Docker Image
+7. Run Docker Image
 8. ... JMeter, ...
 9. ... Slack, ...
