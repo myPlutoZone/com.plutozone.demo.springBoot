@@ -63,14 +63,14 @@ chmod 754 mvnw
 sleep 3
 
 # Start Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
-java -jar com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar &
+java -jar ./target/demo.springBoot-0.0.1-SNAPSHOT.jar &
 ```
 
 
 ## Plan C) Build & Deploy at Container by Shell + Docker + GitHub
 
 
-## Build & Deploy at Container by Jenkins + Docker + GitHub
+## Plan D) Build & Deploy at Container by Jenkins + Docker + GitHub
 1. Checkout Source.
 2. Build.
 3. ... Unit, SonarQube, ...
