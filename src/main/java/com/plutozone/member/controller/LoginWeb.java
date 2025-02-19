@@ -16,6 +16,7 @@
  * Notes		:
  * History		: [NO][Programmer][Description]
  *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
+ *				: [20250101000000][pluto#plutozone.com][REPORT: 프론트이므로 경로에서 member는 생략]
  */
 package com.plutozone.member.controller;
 

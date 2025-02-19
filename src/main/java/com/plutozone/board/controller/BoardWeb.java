@@ -137,7 +137,7 @@ public class BoardWeb {
 				boardDto.setFile_save(uploadedFile);
 			}
 
-			// DB 저장
+			// [2025-01-01][pluto#plutozone.com][UPDATE: 등록 시간은 DB 기준으로 변경]
 			// boardDto.setWriteDate((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
 			if (boardSrvc.add(boardDto)) {
 
@@ -173,9 +173,9 @@ public class BoardWeb {
 		
 		// [2025-01-01][pluto#plutozone.com][TODO-필수: 파일 업로드 시 최상위 경로 from Property]
 		// [2025-01-01][pluto#plutozone.com][TODO-필수: 원본 및 저장 파일명 from DB]
-		File downloadFile = new File(System.getProperty("user.dir") + "/upload/" + fileName);
-		Resource resource = new UrlResource(downloadFile.toURI());
-		String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		File downloadFile	= new File(System.getProperty("user.dir") + "/upload/" + fileName);
+		Resource resource	= new UrlResource(downloadFile.toURI());
+		String contentType	= request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
 		if (contentType == null) contentType = "text/plain";
 		
