@@ -2,7 +2,7 @@
 <configuration>
 	<property name="PATTERN_CONSOLE"	value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-5level]) %logger{5} - %msg %n" />
 	<property name="PATTERN_FILE"		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{5} - %msg %n" />
-	<property name="FILE_PATH"			value="/home/pluto/_logs"/>
+	<property name="FILE_PATH"			value="/home/pluto/_log"/>
 	<property name="FILE_NAME"			value="com.plutozone.demo.springBoot" />
 
 	<!-- Console appender -->
