@@ -18,4 +18,4 @@
 * History		: [NO][Programmer][Description]
 *				: [20250101000000][pluto#plutozone.com][CREATE: Initial Release]
 */
-<!--*/--><a href="/">메인</a> | <a href="/board/list.web">게시판</a> | <a href="/common/exception.web">예외</a>
+<!--*/--><a href="/">메인</a><th:block th:if="${session.ID == null || session.ID == ''}"> | <a href="/login.web">로그인</a></th:block><th:block th:if="${session.ID != null && session.ID != ''}"> | <a href="/logout.web">로그아웃([[${session.ID}]])</a></th:block> | <a href="/board/list.web">게시판</a> | <a href="/common/exception.web">예외</a>

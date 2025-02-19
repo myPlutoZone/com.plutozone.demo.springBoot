@@ -123,7 +123,8 @@ public class BoardWeb {
 	 * <p>IMPORTANT:</p>
 	 * <p>EXAMPLE:</p>
 	 */
-	@PostMapping("/board/writeProc.web")
+	@RequestMapping(value="/board/writeProc.web", method = RequestMethod.POST)
+	// @PostMapping("/board/writeProc.web")
 	public String writeProc(@ModelAttribute BoardDto boardDto, Model model) {
 
 		String viewPage = "error";

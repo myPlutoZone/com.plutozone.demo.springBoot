@@ -63,7 +63,7 @@ chmod 754 mvnw
 sleep 3
 
 # Start Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
-java -jar -server -Xms128M -Xmx256M -Xloggc:~/_gc/com.plutozone.demo.springBoot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps ./target/demo.springBoot-0.0.1-SNAPSHOT.jar > /dev/null &
+java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar > /dev/null &
 # java -jar ./target/demo.springBoot-0.0.1-SNAPSHOT.jar &
 ```
 
