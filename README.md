@@ -27,9 +27,9 @@ C:\>gradlew.bat clean build         # gradlew.bat clean jar
 ```
 
 
-## Plan B) baseShell.sh = Build & Deploy at Server by Shell + GitHub
+## Plan B) byShell.sh = Build & Deploy at Server by Shell + GitHub
 ```bash
-$ vi ~/baseShell.sh
+$ vi ~/byShell.sh
 #!/bin/bash
 
 # ------------------------------------------------------
@@ -90,14 +90,15 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 ```
 
 
-## Plan C) baseDocker.sh = Build & Deploy at Container by Shell + Docker(Dockerfile) + GitHub
+## Plan C) byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
 ```bash
-$ vi ~/Dockerfile
-FROM openjdk:8-alpine
+$ vi ~/docker/Dockerfile
+FROM plutomsw/demo-springboot
+# FROM openjdk:8-alpine
 
 ARG VERSION
 
-COPY com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar /app/demo.springBoot.jar
+COPY ~/com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar /app/demo.springBoot.jar
 
 LABEL maintainer="Sungwan Myung<pluto#plutozone.com>" \
       title="Spring Boot Demo" \
@@ -110,11 +111,11 @@ VOLUME /app/upload
 
 WORKDIR $APP_HOME
 ENTRYPOINT ["java"]
-CMD ["-jar", "demo.springBoot"]
+CMD ["-jar", "demo.springBoot.jar"]
 ```
 
 ```bash
-$ vi ~/baseDocker.sh
+$ vi ~/byDocker.sh
 #!/bin/bash
 
 # ------------------------------------------------------
@@ -132,28 +133,6 @@ export PATH=$PATH:$JAVA_HOME/bin
 # echo $PATH
 # java -version
 
-# Stop Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
-PID=`ps -ef | grep demo.springBoot-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}'`
-
-if [ "x$PID" != "x" ] && kill -0 $PID 2>/dev/null; then
-	RUNNING=1
-else
-	RUNNING=0
-fi
-
-if [ $RUNNING -eq 1 ]; then
-    kill -9 $PID
-    sleep 3
-    echo "----------------------------------------------------------"
-    echo " [SUCCESS] The demo.springBoot-0.0.1-SNAPSHOT.jar has stoped successful."
-    echo "----------------------------------------------------------"
-else
-    echo "-----------------------------------------------------------"
-    echo " [WARNING] The demo.springBoot-0.0.1-SNAPSHOT.jar process is not nunning!"
-    echo "-----------------------------------------------------------"
-fi
-
-
 # Remove Source Folder
 rm -rf com.plutozone.demo.springBoot
 sleep 3
@@ -169,12 +148,25 @@ chmod 754 mvnw
 ./mvnw clean package
 sleep 3
 
-# Docker Build & Push: docker plutomsw/demo.springBoot:${Tag} --build-arg VERSION=${Tag} -f Dockerfile .
-# Docker Run: docker container run plutomsw/demo.springBoot:${Tag}
+
+# ------------------------------------------------------
+# Second, Install Docker at Server only once.
+# ------------------------------------------------------
+cd ..
+
+# 1. Backup & Push
+# docker tag plutomsw/demo-springboot myRegistry.com/ID/demo-nginx:날짜
+
+# 2. Build
+# $ docker plutomsw/demo.springBoot:${Tag} --build-arg VERSION=${Tag} -f Dockerfile .
+
+# 3. Run(Stop old & Start new) & Push
+# $ docker container run plutomsw/demo.springBoot:${Tag}
+docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot
 ```
 
 
-## Plan D) run at Jenkins = Build & Deploy at Container by Jenkins(Jenkinsfile) + Docker(Dockerfile) + GitHub
+## Plan D) run at Jenkins = Build & Deploy at Container by GitHub + Docker(Dockerfile) + Jenkins(Jenkinsfile) 
 1. Checkout Source.
 2. Build.
 3. ... Unit, SonarQube, ...
