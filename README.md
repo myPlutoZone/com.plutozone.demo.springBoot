@@ -98,14 +98,14 @@ FROM plutomsw/demo-springboot
 
 ARG VERSION
 
-COPY ~/com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar /app/demo.springBoot.jar
+COPY demo.springBoot-0.0.1-SNAPSHOT.jar /app/demo.springBoot.jar
 
 LABEL maintainer="Sungwan Myung<pluto#plutozone.com>" \
       title="Spring Boot Demo" \
       version="$VERSION" \
       description="This image is Spring Boot Demo"
 
-ENV APP_HOME /app
+ENV APP_HOME=/app
 EXPOSE 8080
 VOLUME /app/upload
 
@@ -159,6 +159,7 @@ cd ..
 
 # 2. Build
 # $ docker plutomsw/demo.springBoot:${Tag} --build-arg VERSION=${Tag} -f Dockerfile .
+cp com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar dockerDemoSpringboot/
 DATETIME=$(date "+%Y%m%d_%H%M%S")
 docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME
 
