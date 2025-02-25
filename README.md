@@ -92,7 +92,7 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 
 ## Plan C) byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
 ```bash
-$ vi ~/docker/Dockerfile
+$ vi ~/dockerDemoSpringboot/Dockerfile
 FROM plutomsw/demo-springboot
 # FROM openjdk:8-alpine
 
@@ -159,9 +159,12 @@ cd ..
 
 # 2. Build
 # $ docker plutomsw/demo.springBoot:${Tag} --build-arg VERSION=${Tag} -f Dockerfile .
+DATETIME=$(date "+%Y%m%d_%H%M%S")
+docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME
 
 # 3. Run(Stop old & Start new) & Push
-# $ docker container run plutomsw/demo.springBoot:${Tag}
+# Remove Old Container
+# Run New Container
 docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot
 ```
 
