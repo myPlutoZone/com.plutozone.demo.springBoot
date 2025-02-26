@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-	<th:block th:replace="~{/include/header}"></th:block>
+	<th:block th:replace="~{include/header}"></th:block>
 </head>
 <body>
 <form id="frmMain" method="POST">
@@ -10,7 +10,7 @@
 		com.plutozone.demo.springBoot
 	</header>
 	<nav>
-		<th:block th:replace="~{/include/gnb}"></th:block>
+		<th:block th:replace="~{include/gnb}"></th:block>
 	</nav>
 	<section class="content">
 		<nav></nav>
@@ -29,7 +29,7 @@
 		<aside></aside>
 	</section>
 	<footer>
-		<th:block th:replace="~{/include/footer}"></th:block>
+		<th:block th:replace="~{include/footer}"></th:block>
 	</footer>
 </div>
 </form>

@@ -38,10 +38,12 @@ $ vi ~/byShell.sh
 
 export JAVA_HOME=/usr/local/java/jdk-21.0.6
 export JRE_HOME=$JAVA_HOME
-# export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib
-# export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
 export PATH=$PATH:$JAVA_HOME/bin
+# export JAVA_HOME=/usr/local/java/jdk1.8.0_202
+# export JRE_HOME=$JAVA_HOME/jre
+# export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+# export PATH=$PATH:$JAVA_HOME/bin
 
 # echo $JAVA_HOME
 # echo $PATH
@@ -94,6 +96,7 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 ```bash
 $ vi ~/dockerDemoSpringboot/Dockerfile
 FROM plutomsw/demo-springboot
+# FROM openjdk
 # FROM openjdk:8-alpine
 
 ARG VERSION
@@ -124,10 +127,12 @@ $ vi ~/byDocker.sh
 
 export JAVA_HOME=/usr/local/java/jdk-21.0.6
 export JRE_HOME=$JAVA_HOME
-# export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib
-# export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
 export PATH=$PATH:$JAVA_HOME/bin
+# export JAVA_HOME=/usr/local/java/jdk1.8.0_202
+# export JRE_HOME=$JAVA_HOME/jre
+# export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+# export PATH=$PATH:$JAVA_HOME/bin
 
 # echo $JAVA_HOME
 # echo $PATH
