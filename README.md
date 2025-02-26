@@ -35,7 +35,6 @@ $ vi ~/byShell.sh
 # ------------------------------------------------------
 # First, Install JDK and Git Client at Server only once.
 # ------------------------------------------------------
-
 export JAVA_HOME=/usr/local/java/jdk-21.0.6
 export JRE_HOME=$JAVA_HOME
 export CLASSPATH=.:$JAVA_HOME/lib
@@ -95,6 +94,8 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 ## Plan C) byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
 ```bash
 $ vi ~/dockerDemoSpringboot/Dockerfile
+# [2025-02-26][pluto#plutozone.com][TODO: Dockerfile Improvements and Details]
+
 FROM plutomsw/demo-springboot
 # FROM openjdk
 # FROM openjdk:8-alpine
@@ -124,7 +125,6 @@ $ vi ~/byDocker.sh
 # ------------------------------------------------------
 # First, Install JDK and Git Client at Server only once.
 # ------------------------------------------------------
-
 export JAVA_HOME=/usr/local/java/jdk-21.0.6
 export JRE_HOME=$JAVA_HOME
 export CLASSPATH=.:$JAVA_HOME/lib
@@ -160,17 +160,16 @@ sleep 3
 cd ..
 
 # 1. Backup & Push
-# docker tag plutomsw/demo-springboot myRegistry.com/ID/demo-nginx:날짜
+# [2025-02-26][pluto#plutozone.com][TODO: Backup and Push]
 
 # 2. Build
-# $ docker plutomsw/demo.springBoot:${Tag} --build-arg VERSION=${Tag} -f Dockerfile .
+# [2025-02-26][pluto#plutozone.com][TODO: Build Improvements and Details]
 cp com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar dockerDemoSpringboot/
 DATETIME=$(date "+%Y%m%d_%H%M%S")
 docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME
 
-# 3. Run(Stop old & Start new) & Push
-# Remove Old Container
-# Run New Container
+# 3. Run & Push
+# [2025-02-26][pluto#plutozone.com][TODO: Run(Stop old and Start new) & Push Improvements and Details]
 docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot
 ```
 
