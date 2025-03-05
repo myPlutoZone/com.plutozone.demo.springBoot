@@ -60,8 +60,8 @@ public class LoginWeb {
 		try {
 			HttpSession session = request.getSession(false);
 			
-			String name		= (String) session.getAttribute("NAME");
-			String dt_login	= (String) session.getAttribute("DT_LOGIN");
+			// String name		= (String) session.getAttribute("NAME");
+			// String dt_login	= (String) session.getAttribute("DT_LOGIN");
 			session.invalidate();
 			
 			return "redirect:/";
