@@ -35,7 +35,7 @@ $ vi ~/byShell.sh
 # ------------------------------------------------------
 # First, Install JDK and Git Client at Server only once.
 # ------------------------------------------------------
-export JAVA_HOME=/usr/local/java/jdk-21.0.6
+export JAVA_HOME=/usr/local/java/jdk-21.0.10
 export JRE_HOME=$JAVA_HOME
 export CLASSPATH=.:$JAVA_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin
@@ -133,7 +133,7 @@ $ vi ~/byDocker.sh
 # ------------------------------------------------------
 # First, Install JDK and Git Client at Server only once.
 # ------------------------------------------------------
-export JAVA_HOME=/usr/local/java/jdk-21.0.6
+export JAVA_HOME=/usr/local/java/jdk-21.0.10
 export JRE_HOME=$JAVA_HOME
 export CLASSPATH=.:$JAVA_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin
