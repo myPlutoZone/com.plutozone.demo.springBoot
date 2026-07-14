@@ -11,23 +11,23 @@ plutozone.com의 지적재산권 침해에 해당된다.
 > Copyright (C) 2005 plutozone.com All Rights Reserved
 
 
-# Overview
+# 1. Overview
 - 본 프로젝트는 Spring Boot MVC by IntelliJ + Maven 기반의 데모를 제공한다.
 
 
-# History
+# 2. History
 - 2025-02-06 [CREATE] Initial Release
 
 
-# Build & Deploy
-## Plan A) only Build(Maven or Gradle)
+# 3. Build and deploy methods
+## 3-1. only Build(Maven or Gradle)
 ```cmd
 C:\>mvnw.cmd clean package
 C:\>gradlew.bat clean build         # gradlew.bat clean jar
 ```
 
 
-## Plan B) byShell.sh = Build & Deploy at Server by Shell + GitHub
+## 3-2. byShell.sh = Build & Deploy at Server by Shell + GitHub
 ```bash
 $ vi ~/byShell.sh
 #!/bin/bash
@@ -48,7 +48,9 @@ export PATH=$PATH:$JAVA_HOME/bin
 # echo $PATH
 # java -version
 
+# ------------------------------------------------------
 # Stop Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
+# ------------------------------------------------------
 PID=`ps -ef | grep demo.springBoot-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}'`
 
 if [ "x$PID" != "x" ] && kill -0 $PID 2>/dev/null; then
@@ -69,23 +71,29 @@ else
     echo "-----------------------------------------------------------"
 fi
 
-
+# ------------------------------------------------------
 # Remove Source Folder
+# ------------------------------------------------------
 rm -rf com.plutozone.demo.springBoot
 sleep 3
 
+# ------------------------------------------------------
 # Checkout Source from GitHub.
+# ------------------------------------------------------
 git clone https://github.com/myPlutoZone/com.plutozone.demo.springBoot.git
 sleep 3
 
-cd com.plutozone.demo.springBoot
-
+# ------------------------------------------------------
 # Clean and Build
+# ------------------------------------------------------
+cd com.plutozone.demo.springBoot
 chmod 754 mvnw
 ./mvnw clean package
 sleep 3
 
+# ------------------------------------------------------
 # Start Service(demo.springBoot-0.0.1-SNAPSHOT.jar)
+# ------------------------------------------------------
 java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar > /dev/null &
 # java -jar ./target/demo.springBoot-0.0.1-SNAPSHOT.jar &
 ```
