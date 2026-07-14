@@ -23,7 +23,7 @@ plutozone.com의 지적재산권 침해에 해당된다.
 ## 3-1. only Build(Maven or Gradle)
 ```cmd
 C:\>mvnw.cmd clean package
-C:\>gradlew.bat clean build         # gradlew.bat clean jar
+C:\>gradlew.bat clean build		 # gradlew.bat clean jar
 ```
 
 
@@ -60,15 +60,15 @@ else
 fi
 
 if [ $RUNNING -eq 1 ]; then
-    kill -9 $PID
-    sleep 3
-    echo "----------------------------------------------------------"
-    echo " [SUCCESS] The demo.springBoot-0.0.1-SNAPSHOT.jar has stoped successful."
-    echo "----------------------------------------------------------"
+	kill -9 $PID
+	sleep 3
+	echo "----------------------------------------------------------"
+	echo " [SUCCESS] The demo.springBoot-0.0.1-SNAPSHOT.jar has stoped successful."
+	echo "----------------------------------------------------------"
 else
-    echo "-----------------------------------------------------------"
-    echo " [WARNING] The demo.springBoot-0.0.1-SNAPSHOT.jar process is not nunning!"
-    echo "-----------------------------------------------------------"
+	echo "-----------------------------------------------------------"
+	echo " [WARNING] The demo.springBoot-0.0.1-SNAPSHOT.jar process is not nunning!"
+	echo "-----------------------------------------------------------"
 fi
 
 # ------------------------------------------------------
@@ -99,27 +99,28 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 ```
 
 
-## Plan C) byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
+## 3-3. byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
 ```bash
 $ vi ~/dockerDemoSpringboot/Dockerfile
-# [2025-02-26][pluto#plutozone.com][TODO: Dockerfile Improvements and Details]
+# [2025-02-26][pluto#plutozone.com][TODO-개선: Dockerfile Improvements and Details]
 
-FROM plutomsw/demo-springboot
+FROM eclipse-temurin:21-jdk
+# FROM plutomsw/demo-springboot:v1
 # FROM openjdk
 # FROM openjdk:8-alpine
 
 ARG VERSION
 
-COPY demo.springBoot-0.0.1-SNAPSHOT.jar /app/demo.springBoot.jar
+COPY demo.springBoot-0.0.1-SNAPSHOT.jar /root/demo.springBoot.jar
 
 LABEL maintainer="Sungwan Myung<pluto#plutozone.com>" \
-      title="Spring Boot Demo" \
-      version="$VERSION" \
-      description="This image is Spring Boot Demo"
+          title="Spring Boot Demo" \
+          version="$VERSION" \
+          description="This image is Spring Boot Demo"
 
-ENV APP_HOME=/app
+ENV APP_HOME=/root
 EXPOSE 8080
-VOLUME /app/upload
+VOLUME /root/upload
 
 WORKDIR $APP_HOME
 ENTRYPOINT ["java"]
@@ -174,15 +175,15 @@ cd ..
 # [2025-02-26][pluto#plutozone.com][TODO: Build Improvements and Details]
 cp com.plutozone.demo.springBoot/target/demo.springBoot-0.0.1-SNAPSHOT.jar dockerDemoSpringboot/
 DATETIME=$(date "+%Y%m%d_%H%M%S")
-docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME
+docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME -t plutomsw/demo-springboot:renewal
 
 # 3. Run & Push
-# [2025-02-26][pluto#plutozone.com][TODO: Run(Stop old and Start new) & Push Improvements and Details]
-docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot
+# [2025-02-26][pluto#plutozone.com][TODO-개선: Run(Stop old and Start new) & Push Improvements and Details]
+docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot:renewal
 ```
 
 
-## Plan D) run at Jenkins = Build & Deploy at Container by GitHub + Docker(Dockerfile) + Jenkins(Jenkinsfile) 
+## 3-4. run at Jenkins = Build & Deploy at Container by GitHub + Docker(Dockerfile) + Jenkins(Jenkinsfile) 
 1. Checkout Source.
 2. Build.
 3. ... Unit, SonarQube, ...
