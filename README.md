@@ -1,15 +1,12 @@
 # com.plutozone.demo.SpringBoot
 
 
-> YOU ARE STRICTLY PROHIBITED TO COPY, DISCLOSE, DISTRIBUTE, MODIFY OR USE THIS
-DOCUMENT IN PART OR AS A WHOLE WITHOUT THE PRIOR WRITTEN CONSENT OF
-PLUTOZONE.COM.
+> YOU ARE STRICTLY PROHIBITED TO COPY, DISCLOSE, DISTRIBUTE, MODIFY OR USE THIS DOCUMENT IN PART OR AS A WHOLE WITHOUT THE PRIOR WRITTEN CONSENT OF PLUTOZONE.COM.
 PLUTOZONE.COM OWNS THE INTELLECTUAL PROPERTY RIGHTS IN AND TO THIS DOCUMENT.
 COPYRIGHT © 2005 PLUTOZONE.COM ALL RIGHTS RESERVED
 ***
-> 하기 문서에 대한 저작권을 포함한 지적재산권은 plutozone.com에 있으며 plutozone.com이 명시적으
-로 허용하지 않는 사용, 복사, 변경 및 제 3자에 의한 공개, 배포는 엄격히 금지되며
-plutozone.com의 지적재산권 침해에 해당된다.
+> plutozone.com의 사전 서면 동의 없이 본 문서의 전부 또는 일부를 복사, 공개, 배포, 수정하거나 사용하는 행위는 엄격히 금지됩니다.
+본 문서에 대한 지적재산권은 plutozone.com이 보유하고 있습니다.
 Copyright © 2005 plutozone.com All Rights Reserved
 ***
 
