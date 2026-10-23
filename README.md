@@ -1,33 +1,35 @@
+# com.plutozone.demo.SpringBoot
+
+
 > YOU ARE STRICTLY PROHIBITED TO COPY, DISCLOSE, DISTRIBUTE, MODIFY OR USE THIS
 DOCUMENT IN PART OR AS A WHOLE WITHOUT THE PRIOR WRITTEN CONSENT OF
 PLUTOZONE.COM.
 PLUTOZONE.COM OWNS THE INTELLECTUAL PROPERTY RIGHTS IN AND TO THIS DOCUMENT.
-COPYRIGHT (C) 2005 PLUTOZONE.COM ALL RIGHTS RESERVED
+COPYRIGHT © 2005 PLUTOZONE.COM ALL RIGHTS RESERVED
 ***
 > 하기 문서에 대한 저작권을 포함한 지적재산권은 plutozone.com에 있으며 plutozone.com이 명시적으
 로 허용하지 않는 사용, 복사, 변경 및 제 3자에 의한 공개, 배포는 엄격히 금지되며
 plutozone.com의 지적재산권 침해에 해당된다.
+Copyright © 2005 plutozone.com All Rights Reserved
 ***
-> Copyright (C) 2005 plutozone.com All Rights Reserved
 
 
-# 1. Overview
+## 1. Overview
 - 본 프로젝트는 Spring Boot MVC by IntelliJ + Maven 기반의 데모를 제공한다.
 
 
-# 2. History
+## 2. History
 - 2025-02-06 [CREATE] Initial Release
 
 
-# 3. Build and deploy methods
-## 3-1. only Build(Maven or Gradle)
+## 3. Build and deploy methods
+### 3-1. only Build(Maven or Gradle)
 ```cmd
 C:\>mvnw.cmd clean package
 C:\>gradlew.bat clean build		 # gradlew.bat clean jar
 ```
 
-
-## 3-2. byShell.sh = Build & Deploy at Server by Shell + GitHub
+### 3-2. byShell.sh = Build & Deploy at Server by Shell + GitHub
 ```bash
 $ vi ~/byShell.sh
 #!/bin/bash
@@ -98,8 +100,7 @@ java -jar -server -Xms128M -Xmx256M ./target/demo.springBoot-0.0.1-SNAPSHOT.jar 
 # java -jar ./target/demo.springBoot-0.0.1-SNAPSHOT.jar &
 ```
 
-
-## 3-3. byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
+### 3-3. byDocker.sh = Build & Deploy at Container by Shell + GitHub + Docker(Dockerfile)
 ```bash
 $ vi ~/dockerDemoSpringboot/Dockerfile
 # [2025-02-26][pluto#plutozone.com][TODO-개선: Dockerfile Improvements and Details]
@@ -182,8 +183,7 @@ docker build dockerDemoSpringboot --build-arg VERSION=$DATETIME -t plutomsw/demo
 docker run -d --name demoSpringboot -p 1000:8080 plutomsw/demo-springboot:renewal
 ```
 
-
-## 3-4. run at Jenkins = Build & Deploy at Container by GitHub + Docker(Dockerfile) + Jenkins(Jenkinsfile) 
+### 3-4. run at Jenkins = Build & Deploy at Container by GitHub + Docker(Dockerfile) + Jenkins(Jenkinsfile) 
 1. Checkout Source.
 2. Build.
 3. ... Unit, SonarQube, ...
